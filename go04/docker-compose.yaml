@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  redis:
+    container_name: docker_redis
+    image: redis:7
+    restart: always
+    ports:
+      - "6379:6379"
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    ports:
+      - "8090:8090"
+    environment:
+      REDIS_DB: "redis"
+networks:
+  default:
